@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sky Travels</title>
+    <style>
+        body {
+            font-family: cursive;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .details-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .details-container h1 {
+            margin-bottom: 20px;
+            font-size: 2.5em;
+        }
+
+        .details-container p {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        .details-container .hotel-details {
+            text-align: left;
+        }
+
+        .details-container .hotel-details p {
+            margin: 5px 0;
+        }
+
+        .payment-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #00aaff;
+            color: #fff;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .payment-btn:hover {
+            background-color: #007acc;
+        }
+    </style>
+    <link rel="icon" type="image/png" href="/images/favicon.ico">
+</head>
+<body>
+    <div class="details-container">
+        <h1>Hotel Booking Details</h1>
+        <div class="hotel-details">
+            <p><strong>Hotel Name:</strong> <%= data[0].hotel.name %></p>
+            <p><strong>Hotel ID:</strong> <%= data[0].hotel.hotelId %></p>
+            <p><strong>Check-in Date:</strong> <%= data[0].offers[0].checkInDate %></p>
+            <p><strong>Check-out Date:</strong> <%= data[0].offers[0].checkOutDate %></p>
+            <p><strong>Room Type:</strong> <%= data[0].offers[0].room.name %></p>
+            <p><strong>Room Category:</strong> <%= data[0].offers[0].room.typeEstimated.category %></p>
+            <p><strong>Number of Beds:</strong> <%= data[0].offers[0].room.typeEstimated.beds %></p>
+            <p><strong>Bed Type:</strong> <%= data[0].offers[0].room.typeEstimated.bedType %></p>
+            <p><strong>Description:</strong> <%= data[0].offers[0].room.description.text %></p>
+            <p><strong>Price:</strong>€<%=data[0].offers[0].price.total%> </p>
+        </div>
+        <button class="payment-btn" onclick="proceedToPayment('<%= JSON.stringify(data[0]) %>')">Proceed to Payment</button>
+    </div>
+
+        <% function convertTo(priceGBP,rate) { %>
+            <% const conversionRate = rate;%>
+            <% const priceINR = parseFloat(priceGBP) * parseFloat(rate);%>
+            <% return priceINR.toFixed(2);%>
+        <%}%>
+    <script>
+        function proceedToPayment(offer) {
+            offer = offer.replace(/[\u0000-\u001F\u007F-\u009F]/g, '');
+            offers = JSON.parse(offer);
+            console.log(offers.hotel.name);
+            const paymentData = {
+                hotelName: offers.hotel.name,
+                hotelId: offers.hotel.hotelId,
+                checkInDate: offers.offers[0].checkInDate,
+                checkOutDate: offers.offers[0].checkOutDate,
+                price: offers.offers[0].price.total,
+                currency: offers.offers[0].price.currency,
+            };
+
+            console.log(paymentData);
+
+            fetch('/payment-hotel', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(paymentData)
+            })
+            .then(response => {
+                if (response.ok) return response.json();
+                return response.json().then(json => Promise.reject(json));
+            })
+            .then(({url}) => {
+                window.location = url;
+                // Handle successful payment, e.g.,
+                            // redirect to a confirmation page
+                        })
+            .catch(error => {
+                console.error('Error:', error);
+                // Handle errors
+            });
+        }
+    </script>
+</body>
+</html>

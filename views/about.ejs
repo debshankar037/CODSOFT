@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sky Travels</title>
+    <style>
+    body {
+        font-family: cursive;
+        margin: 0;
+        padding: 0;
+        background-color: #f5f5f5;
+        color: #333;
+    }
+    
+    .container {
+        width: 80%;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+    }
+    
+    header {
+        text-align: center;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #ddd;
+    }
+    
+    header h1 {
+        margin: 0;
+        font-size: 2.5em;
+        color: #0066cc;
+    }
+    
+    main {
+        padding: 20px;
+    }
+    
+    section p {
+        line-height: 1.6;
+        margin-bottom: 15px;
+    }
+    
+    button {
+        display: block;
+        width: 200px;
+        margin: 20px auto;
+        padding: 10px;
+        font-size: 1em;
+        color: #fff;
+        background-color: #0066cc;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    
+    button:hover {
+        background-color: #005bb5;
+    }
+</style>
+<link rel="icon" type="image/png" href="/images/favicon.ico">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>About Sky Travels</h1>
+        </header>
+        
+        <main>
+            <section>
+                <p>
+                    Welcome to Sky Travels! We are your ultimate travel partner, committed to making your travel experiences unforgettable. Our mission is to provide the best travel services, ensuring that your adventures are smooth, enjoyable, and filled with wonderful memories.
+                </p>
+                <p>
+                    At Sky Travels, we offer a wide range of travel packages and customized tours to cater to your individual preferences and budget. Whether you're looking for a relaxing beach vacation, an adventurous mountain trek, or a cultural city tour, we have something for everyone.
+                </p>
+                <p>
+                    Our team of experienced travel experts is dedicated to helping you plan every aspect of your journey. From booking flights and accommodation to arranging guided tours and providing travel tips, we are here to assist you every step of the way.
+                </p>
+                <p>
+                    Thank you for choosing Sky Travels. We look forward to being a part of your next adventure!
+                </p>
+            </section>
+            <button onclick="window.location.href='/'">Go Back to Home</button>
+        </main>
+    </div>
+</body>
+<%-include("footer.ejs")%>
+</html>

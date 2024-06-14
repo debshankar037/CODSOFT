@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sky Travels</title>
+    <style>
+        /* CSS for styling hotel cards */
+        body {
+            font-family: cursive;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f9;
+            padding:0px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            font-family: cursive;
+        }
+
+        .cards-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 0 -10px;
+        }
+
+        .card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+    padding: 20px;
+    width: calc(45% - 20px); /* Adjusted width */
+    box-sizing: border-box;
+    transition: transform 0.2s;
+    font-family: cursive;
+}
+
+        .card:hover {
+            transform: scale(1.05);
+            cursor: pointer;
+        }
+
+        .card h2 {
+            margin-top: 10px;
+            text-align: center;
+            font-size: 1.5em;
+            color: #444;
+        }
+
+        .card img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            display: block;
+            margin: 0 auto;
+            border-radius: 5px;
+        }
+
+        .card .details {
+            margin: 10px 0;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .card .rating {
+            text-align: center;
+            font-size: 16px;
+            color: #FFD700;
+            margin-bottom: 10px;
+        }
+
+        .locate-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 10px auto;
+            text-align: center;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .locate-btn:hover {
+            background-color: #0056b3;
+        }
+
+        /* Styles for the form overlay */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .overlay-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            width: 300px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding-left: 40px;
+            padding-right: 60px;
+        }
+
+        .overlay-content h2 {
+            text-align: center;
+            margin-top: 0;
+        }
+
+        .overlay-content label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+
+        .overlay-content input, .overlay-content button {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .overlay-content button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .overlay-content button:hover {
+            background-color: #0056b3;
+        }
+        .header{
+            font-family: cursive !important;
+            background-color: #05203c !important;
+            height: 150px !important;
+            width: 1390px !important;
+        }
+        #carButton,#flightButton,#hotelButton{
+            background: transparent !important;
+            border:solid 1px white !important;
+        }
+        #carButton:hover,#flightButton:hover,#hotelButton:hover{
+            background-color: rgb(32, 94, 252)  !important;
+            border:solid 1px white !important;
+        }
+    </style>
+    <link rel="icon" type="image/png" href="/images/favicon.ico">
+</head>
+<body>
+    <%-include("header.ejs")%>
+    <h1>Hotel Offers</h1>
+    <div class="cards-container">
+        <% const images = ['image1.jpg', 'image2.jpg', 'image3.jpg','image4.jpg', 'image5.jpg', 'image6.jpg','image7.jpg', 'image8.jpg', 'image9.jpg','image10.jpg', 'image11.jpg', 'image12.jpg','image13.jpg', 'image14.jpg', 'image15.jpg','image16.jpg', 'image17.jpg', 'image18.jpg','image19.jpg', 'image20.jpg', 'image21.jpg','image22.jpg', 'image23.jpg', 'image24.jpg','image25.jpg', 'image26.jpg', 'image27.jpg','image28.jpg', 'image29.jpg', 'image30.jpg',]; %>
+        <% offers.forEach(function(offer, index) { %>
+            <div class="card" onclick="showBookingForm('<%= offer.hotelId %>','<%= offer.name %>')">
+                <img src="/images/<%= images[index % images.length] %>" alt="Hotel Image">
+                <h2><%= offer.name %></h2>
+                <div class="rating">
+                    <%= '⭐'.repeat(Math.floor(Math.random() * 3) + 3) %>
+                </div>
+                <div class="details">
+                    <p><strong>Chain Code:</strong> <%= offer.chainCode %></p>
+                    <p><strong>Hotel ID:</strong> <%= offer.hotelId %></p>
+                    <p><strong>Geo Code:</strong> Latitude <%= offer.geoCode.latitude %>, Longitude <%= offer.geoCode.longitude %></p>
+                </div>
+                <button class="locate-btn" onclick="locateHotel(event, '<%= offer.name %>', '<%= offer.iataCode %>')">Locate</button>
+            </div>
+        <% }); %>
+    </div>
+
+    <div class="overlay" id="bookingFormOverlay">
+        <div class="overlay-content">
+            <h2>Booking Form</h2>
+            <form action="/available_booking_options" method="post">
+                <input type="hidden" id="hotelId" name="hotelId">
+                <input type="hidden" id="hotelName" name="hotelName">
+                <label for="checkInDate">Check-in Date:</label>
+                <input type="date" id="checkInDate" name="checkInDate" required>
+                <label for="checkOutDate">Check-out Date:</label>
+                <input type="date" id="checkOutDate" name="checkOutDate" required>
+                <label for="adults">Number of Adults:</label>
+                <input type="number" id="adults" name="adults" required min="1">
+                <label for="rooms">Number of Rooms:</label>
+                <input type="number" id="rooms" name="rooms" required min="1">
+                <button type="submit">Check Availability</button>
+            </form>
+            <button onclick="closeBookingForm()">Cancel</button>
+        </div>
+    </div>
+
+    <script>
+        function locateHotel(event, hotelName, iataCode) {
+            event.stopPropagation();
+            const searchQuery = encodeURIComponent(`${hotelName} ${iataCode}`);
+            window.open(`https://www.google.com/maps?q=${searchQuery}`);
+        }
+
+        function showBookingForm(hotelId,name) {
+            console.log(hotelId);
+            console.log(name);
+            document.getElementById('hotelId').value = hotelId;
+            document.getElementById('hotelName').value = name;
+            console.log(document.getElementById('hotelName').value);
+            document.getElementById('bookingFormOverlay').style.display = 'flex';
+        }
+
+        function closeBookingForm() {
+            document.getElementById('bookingFormOverlay').style.display = 'none';
+        }
+    </script>
+    <script src="/flightInput.js"></script>
+</body>
+<%- include("footer.ejs") %>
+</html>
+
+
+
+
+

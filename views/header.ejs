@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/flightInput.css">
+</head>
+<body>
+    <div class="header">
+        <img src="/images/logo.png" id="logo">
+        <h1 id="brandName">Sky Travels</h1>
+        <div id="tabs">
+            <button id="flightButton">✈Flights</button>
+            <button id="hotelButton">Hotels</button>
+            <button id="carButton">Blogs</button>
+        </div>
+        <h1 id="adline">Millions of Happy Travel Stories Begin Here!!!</h1>
+        <div id="userManagement">
+            <button onclick="location.href='/login'" id="login">Login</button>
+            <button onclick="location.href='/register'" id="register">Register</button>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', async function () {
+            const response = await fetch('/check-log-in', {
+                method: 'GET',
+                credentials: 'include'
+            }).then((res) => res.json());
+    
+            if (response.status === 'ok') {
+                document.getElementById('userManagement').innerHTML = `
+                    <button onclick="location.href='/profile'" id="profile">Profile</button>
+                    <button onclick="logout()" id="logout">Logout</button>
+                `;
+            }
+            /*else{
+                document.getElementById('userManagement').innerHTML =`
+                    <button onclick="location.href='/login'" id="login">Login</button>
+                    <button onclick="location.href='/register'" id="register">Register</button>
+                `
+            }*/
+        });
+    
+        async function logout() {
+            await fetch('/logout', {
+                method: 'POST',
+                credentials: 'include'
+            });
+            window.location.href = '/';
+        }
+    </script>
+</body>
+</html>

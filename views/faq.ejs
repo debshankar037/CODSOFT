@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sky Travels</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            max-width: 800px;
+            width: 100%;
+            margin: 20px 0;
+        }
+
+        h1 {
+            color: #4CAF50;
+            text-align: center;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid #ddd;
+            padding: 10px 0;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-question {
+            font-size: 1.2em;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-answer {
+            display: none;
+            padding: 10px 0;
+            font-size: 1em;
+            color: #333;
+        }
+
+        .button {
+            display: inline-block;
+            margin: 20px 0;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #ffffff;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .button:hover {
+            background-color: #45a049;
+        }
+        .header{
+            font-family: cursive !important;
+            background-color: #05203c !important;
+            height: 150px !important;
+            width: 1382px !important;
+        }
+        #carButton,#flightButton,#hotelButton{
+        background: transparent !important;
+        border:solid 1px white !important;
+    }
+    #carButton:hover,#flightButton:hover,#hotelButton:hover{
+        background-color: rgb(32, 94, 252)  !important;
+        border:solid 1px white !important;
+    }
+    </style>
+    <link rel="icon" type="image/png" href="/images/favicon.ico">
+</head>
+<body>
+    <%-include("header.ejs")%>
+    <div class="container">
+        <h1>FAQ - Sky Travels</h1>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                <span>How does Sky Travels work?</span>
+                <span>➔</span>
+            </div>
+            <div class="faq-answer">
+                <p>We’re a flight, car hire and hotel search engine. We scan all the top airlines and travel providers across the net, so you can compare flight fares and other travel costs in one place. Once you’ve found the best flight, car hire or hotel, you book directly with the provider.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                <span>How can I find the cheapest flight using Sky Travels?</span>
+                <span>➔</span>
+            </div>
+            <div class="faq-answer">
+                <p>Finding flights is easy here – over 100 million savvy travellers come to us each month to find cheap flight tickets, hotels and car hire. Here are a few simple tips on how to get the most out of your flight search.</p>
+                <p>Save money and time: Whether it's the fastest flight or the smartest stay, you can pick your preferred flight provider or hotel based on real traveller ratings, and book instantly.</p>
+                <p>Search Everywhere. Go anywhere: Fancy a trip but don’t mind where? Or perhaps you want to discover somewhere new. Search ‘Everywhere’ for the best budget airfare anywhere on any given day.</p>
+                <p>Find the cheapest time to fly: If you have a destination in mind and want to find the cheapest flight, choose ‘Cheapest month’ when you search. Then find flights on the cheapest day.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                <span>Where should I book a flight to right now?</span>
+                <span>➔</span>
+            </div>
+            <div class="faq-answer">
+                <p>If you're looking for inspiration for your next trip, search Everywhere to find a cheap flight ticket anywhere.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                <span>Do I book my flight with Sky Travels?</span>
+                <span>➔</span>
+            </div>
+            <div class="faq-answer">
+                <p>We’re a search engine, so after you’ve found the best flight ticket you’ll book directly with the airline or travel provider on their site. This will give you the opportunity to add any loyalty information you would like and select your preferred flight options, such as seating.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                <span>What happens after I have booked my flight?</span>
+                <span>➔</span>
+            </div>
+            <div class="faq-answer">
+                <p>Your flight booking confirmation email and all the other info you'll need will come from the airline or provider you booked with. If you have any follow-up questions about your booking, or want to change or cancel your flight, you’d need to get in touch with them.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                <span>Does Sky Travels do hotels too?</span>
+                <span>➔</span>
+            </div>
+            <div class="faq-answer">
+                <p>Yes! You can use the same magic that powers our flight search to find your perfect stay anywhere.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                <span>What about car hire?</span>
+                <span>➔</span>
+            </div>
+            <div class="faq-answer">
+                <p>We scan top car hire providers to bring you the best options available, so you can find the perfect car for your trip at the best price.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                <span>What’s a Price Alert?</span>
+                <span>➔</span>
+            </div>
+            <div class="faq-answer">
+                <p>If you set up a Price Alert, we’ll watch the price of plane tickets for you, and let you know via email or push notification via the app if they rise or fall.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                <span>Can I book a flexible flight ticket?</span>
+                <span>➔</span>
+            </div>
+            <div class="faq-answer">
+                <p>We understand how important it is to have flexible holiday plans. Sometimes, you can pay an extra fee for an amendable airline ticket, so look out for this option as you book. You can also look for hotels and car hire options with free cancellation, so you can book now and amend or even cancel later if you need to.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                <span>Can I book flights that emit less CO₂?</span>
+                <span>➔</span>
+            </div>
+            <div class="faq-answer">
+                <p>Yes - since we began showing carbon emission info on flights where it’s available, over 100 million travellers have found a plane ticket with lower emissions for their route.</p>
+            </div>
+        </div>
+
+        <a href="/" class="button">Back to Home</a>
+    </div>
+
+    <script>
+        document.querySelectorAll('.faq-question').forEach(item => {
+            item.addEventListener('click', () => {
+                const answer = item.nextElementSibling;
+                answer.style.display = answer.style.display === 'none' || answer.style.display === '' ? 'block' : 'none';
+            });
+        });
+    </script>
+     <script src="/flightInput.js"></script>
+</body>
+<%-include("footer.ejs")%>
+</html>

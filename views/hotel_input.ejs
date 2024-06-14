@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sky Travels</title>
+     <style>
+        #carButton,#flightButton{
+        background: transparent;
+        border:solid 1px white;
+    }
+    #hotelButton{
+        background-color: rgb(32, 94, 252);
+        border: 0px;
+    }
+    #search{
+        margin-bottom:30px;
+    }
+    input{
+        border:2px solid  #06396f !important;
+        background-color: white;
+        color:#06396f;
+        font-weight: 900;
+        width:300px !important;
+        height:70px !important;
+        font-size: 30px !important;
+    }
+    #search h1{
+        color:#06396f;
+        font-size: 40px;
+        margin-top: 0px;
+    }
+    #search button{
+        width: 200px;
+        padding: 10px;
+        background-color: #06396f;
+        color: white;
+        border: none;
+        cursor: pointer;
+        height:60px;
+        font-size: 25px;
+        border-radius: 5px;
+        font-family: cursive;
+        border: solid 2px #06396f;
+        position:relative;
+        top:90px;
+        left:-150px;
+    }
+    #search button:hover{
+        transform: scale(1.05);
+    }
+    .promo{
+        background-image: url("/images/hotel_promo.jpg") !important;
+    }
+    .promo h1{
+        position:relative !important;
+        top:40px !important;
+    }
+    #switch button{
+        background-color: #06396f !important;
+    }
+    #switch button:hover{
+        background-color: #0f5cad !important;
+    }
+    #search{
+        background-image: url("/images/resturant.jpg");
+        background-position: center;
+        background-size: cover;
+        padding-bottom: 100px;
+    }
+    #return{
+        position:relative;
+        left:100px;
+    }
+    #city{
+        margin-bottom: 0px !important;
+    }
+    </style>
+    <link rel="icon" type="image/png" href="/images/favicon.ico">
+</head>
+<body>
+    <%-include("header.ejs")%>
+    <div id="search">
+        <h1>Best Hotels at your Finger Tips</h1>
+        <form action="/hotel-offers" method="POST">
+            <input type="text" id="city" name="city"  placeholder="Destination City" autocomplete="off"><br><br>
+            <input type="text" placeholder="Check In Date:" name="checkInDate"
+        onfocus="(this.type='date')" required>
+            <input type="text" placeholder="Check Out Date:" name="checkOutDate" id="return"
+        onfocus="(this.type='date')">
+            <button type="submit">Search</button>
+        </form>
+    </div>
+    <div id="switch">
+        <button id="flightButton2">Flight</button>
+        <button id="hotelButton2">Hotel</button>
+        <button id="carButton2">Blogs</button>
+    </div>
+    <div class="promo">
+        <h1 id="promotext">Discover Your Perfect Stay Unbeatable Hotel Deals at Your Fingertips!</h1>
+    </div>
+    <script src="/flightInput.js"></script>
+</body>
+<%-include("footer.ejs")%>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sky Travels</title>
+    <style>
+        body {
+            font-family: cursive;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .confirmation-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .confirmation-container h1 {
+            margin-bottom: 20px;
+            font-size: 2.5em;
+            color: #444;
+        }
+
+        .confirmation-container p {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        .unavailable-message {
+            font-style: italic;
+            color: #888;
+            margin-top: 20px;
+        }
+
+        .sexy-button {
+            background-color: #ff6b6b;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+        }
+
+        .sexy-button:hover {
+            background-color: #ff8787;
+        }
+    </style>
+    <link rel="icon" type="image/png" href="/images/favicon.ico">
+</head>
+<body>
+    <div class="confirmation-container">
+        <h1>Booking Request Received</h1>
+        <p>Thank you for your booking request. Our representatives will get in touch with you shortly.</p>
+        <p class="unavailable-message">Sorry, all rooms are booked. Bookings are currently unavailable.</p>
+        <p><strong>Hotel Name:</strong> <%= hotelName %></p>
+        <p><strong>Check-in Date:</strong> <%= checkInDate %></p>
+        <p><strong>Check-out Date:</strong> <%= checkOutDate %></p>
+        <a href="/hotel-input" class="sexy-button">Continue to Explore</a>
+    </div>
+</body>
+</html>

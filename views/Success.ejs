@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sky Travels</title>
+    <link rel="stylesheet" href="/flightInput.css">
+    <style>
+        body {
+            font-family: cursive !important;
+            background-color: #f4f4f9 !important;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: center !important;
+            align-items: center !important;
+            min-height: 100vh !important;
+            margin: 0 !important;
+            padding-bottom: 0px !important; /* Adjust this value as needed */
+        }
+        .container {
+            background-color: #ffffff !important;
+            border-radius: 15px !important;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+            padding: 30px !important;
+            max-width: 300px !important;
+            width: 100% !important;
+            text-align: center !important;
+            margin: 20px 0 !important;
+        }
+        .container h1 {
+            color: #4CAF50 !important;
+        }
+        .container p {
+            font-size: 18px !important;
+            color: #333333 !important;
+        }
+        .button {
+            display: inline-block !important;
+            margin: 10px !important;
+            padding: 10px 20px !important;
+            font-size: 16px !important;
+            color: #ffffff !important;
+            background-color: #4CAF50 !important;
+            border: none !important;
+            border-radius: 5px !important;
+            cursor: pointer !important;
+            text-decoration: none !important;
+        }
+        .button:hover {
+            background-color: #45a049 !important;
+            transform: scale(1.09);
+        }
+        .continue-button {
+            background-color: #008CBA !important;
+        }
+        .continue-button:hover {
+            background-color: #007bb5 !important;
+            transform: scale(1.09);
+        }
+        .footer-distributed {
+            width: 100% !important;
+            position: relative !important;
+            bottom: 0 !important;
+            margin-top: auto !important;
+        }
+        .header{
+            font-family: cursive !important;
+            background-color: #05203c !important;
+            height: 150px !important;
+            width: 1382px !important;
+        }
+        #carButton,#flightButton,#hotelButton{
+        background: transparent !important;
+        border:solid 1px white !important;
+    }
+    #carButton:hover,#flightButton:hover,#hotelButton:hover{
+        background-color: rgb(32, 94, 252)  !important;
+        border:solid 1px white !important;
+    }
+    </style>
+    <link rel="icon" type="image/png" href="/images/favicon.ico">
+</head>
+<%-include("header.ejs")%>
+<body>
+    <div class="container">
+        <h1>Payment Successful</h1>
+        <p>Flight Number: <%= flightNumber %></p>
+        <p>Departure: <%= departure %></p>
+        <p>Arrival: <%= arrival %></p>
+        <p>Airline: <%= airline %></p>
+        <p>Price: €<%= price %></p>
+        <button class="button" onclick="window.location.href='/download-invoice?invoicePath=<%= encodeURIComponent(invoicePath) %>'">Download Invoice</button>
+        <button class="button continue-button" onclick="window.location.href='/'">Continue Exploring</button>
+    </div>
+    <%- include("footer.ejs") %>
+    <script src="/flightInput.js"></script>
+</body>
+</html>

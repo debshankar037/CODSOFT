@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sky Travels</title>
+    <style>
+        .flight-offer {
+            border: 1px solid #ddd;
+            margin: 10px;
+            padding: 10px;
+            position: relative;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .radio-button {
+            margin-left: 10px;
+        }
+        .payment-popup {
+            display: none;
+            position: absolute;
+            top: 10%;
+            left: 50%;
+            transform: translate(-50%, -10%);
+            padding: 20px;
+            border: 1px solid #ddd;
+            background-color: #fff;
+            z-index: 1000;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .payment-popup h3 {
+            margin: 0 0 10px;
+        }
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 900;
+        }
+    </style>
+    <link rel="stylesheet" href="/flightOffer.css">
+    <link rel="icon" type="image/png" href="/images/favicon.ico">
+</head>
+<body>
+    <h1>Flight Offers</h1>
+    <% function formatDateTime(dateTime) { %>
+        <%const options = { 
+            year: 'numeric', 
+            month: 'short', 
+            day: 'numeric', 
+            hour: '2-digit', 
+            minute: '2-digit' 
+        };%>
+        <%return new Date(dateTime).toLocaleString('en-US', options);%>
+    <% } %>
+
+    <% function formatDuration(duration) { %>
+        <%const regex = /PT(?:(\d+)H)?(?:(\d+)M)?/;%>
+        <%const matches = duration.match(regex);%>
+        <%const hours = matches[1] ? `${matches[1]}h` : '';%>
+        <%const minutes = matches[2] ? `${matches[2]}m` : '';%>
+        <%return `${hours} ${minutes}`.trim();%>
+    <% } %>
+    
+    <script>
+        let id=0;
+        function togglePaymentPopup(offerId, isChecked) {
+            const popup = document.getElementById(`payment-popup-${offerId}`);
+            const overlay = document.getElementById('overlay');
+            console.log("pay");
+            if (isChecked) {
+                popup.style.display = 'block';
+                overlay.style.display = 'block';
+            } else {
+                popup.style.display = 'none';
+                overlay.style.display = 'none';
+            }
+        }
+        function proceedToPayment(offer) {
+            offer=JSON.parse(offer);
+            const paymentData = {
+                airline: offer.itineraries[0].segments[0].carrierCode,
+                flightNumber: offer.itineraries[0].segments[0].number,
+                departure: offer.itineraries[0].segments[0].departure.iataCode,
+                arrival: offer.itineraries[0].segments[0].arrival.iataCode,
+                price: offer.price.total,
+                currency: offer.price.currency,
+                id:id+1
+            };
+
+            console.log(paymentData);
+
+            fetch('/payment', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(paymentData)
+            })
+            .then(response => {if(response.ok)return response.json()
+                return response.json().then(json=>Promise.reject(json))
+            })
+            .then(({url}) => {
+                window.location=url;
+                // Handle successful payment, e.g., redirect to a confirmation page
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                // Handle errors
+            });
+        }
+    </script>
+
+    <div id="overlay" class="overlay"></div>
+
+    <% if (offers.length > 0) { %>
+        <% offers.forEach(offer => { %>
+            <div class="flight-offer">
+                <h2>Flight Offer ID: <%= offer.id %></h2>
+                <table>
+                    <tr>
+                        <th>Carrier</th>
+                        <th>Flight Number</th>
+                        <th>Departure</th>
+                        <th>Arrival</th>
+                        <th>Duration</th>
+                        <th>Price</th>
+                        <th>Pay</th> <!-- New column for the payment option -->
+                    </tr>
+                    <% offer.itineraries.forEach(itinerary => {
+                        itinerary.segments.forEach(segment => { %>
+                            <tr>
+                                <td><%= segment.carrierCode %></td>
+                                <td><%= segment.number %></td>
+                                <td><%= segment.departure.iataCode %> at <%= formatDateTime(segment.departure.at) %></td>
+                                <td><%= segment.arrival.iataCode %> at <%= formatDateTime(segment.arrival.at) %></td>
+                                <td><%= formatDuration(segment.duration) %></td>
+                                <td><%= offer.price.total %> <%= offer.price.currency %></td>
+                                <td> <!-- New column for the payment option -->
+                                    <input type="radio" class="radio-button" name="select-offer" onclick="togglePaymentPopup('<%= offer.id %>', this.checked)">
+                                </td>
+                            </tr>
+                        <% }); 
+                    }); %>
+                </table>
+                <div id="payment-popup-<%= offer.id %>" class="payment-popup">
+                    <h3>Flight Details</h3>
+                    <p>Airline: <%= offer.itineraries[0].segments[0].carrierCode %></p>
+                    <p>Flight Number: <%= offer.itineraries[0].segments[0].number %></p>
+                    <p>Departure: <%= offer.itineraries[0].segments[0].departure.iataCode %> at <%= formatDateTime(offer.itineraries[0].segments[0].departure.at) %></p>
+                    <p>Arrival: <%= offer.itineraries[0].segments[0].arrival.iataCode %> at <%= formatDateTime(offer.itineraries[0].segments[0].arrival.at) %></p>
+                    <p>Price: <%= offer.price.total %> <%= offer.price.currency %></p>
+                    <button class="proceed-to-payment-btn" onclick="proceedToPayment('<%=JSON.stringify(offer)%>')">Proceed to Payment</button>
+                </div>
+            </div>
+        <% }); %>
+    <% } else { %>
+        <p>No flight offers available.</p>
+    <% } %>
+    <%-include("footer.ejs")%>
+</body>
+</html>

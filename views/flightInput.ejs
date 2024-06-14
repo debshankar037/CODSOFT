@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sky Travels</title>
+    <link rel="stylesheet" href="/flightInput.css">
+    <style>
+        #carButton,#hotelButton{
+            background: transparent;
+            border:solid 1px white;
+        }
+        #flightButton{
+            background-color: rgb(32, 94, 252);
+            border: 0px;
+        }
+    </style>
+    <link rel="icon" type="image/png" href="/images/favicon.ico">
+</head>
+<body>
+    <%-include("header.ejs")%>
+    <div class="search-container">
+        <h1 id="tag">Your Journey is just One simple search away</h1>
+            <form class="search-form" action="/flight-offers" method="POST" onsubmit="return validateForm()">
+                <input type="text" id="origin" name="origin" placeholder="From" required>
+                <input type="text" id="destination" name="destination" placeholder="To" required>
+                <input type="text" placeholder="Depart:" name="departureDate"
+        onfocus="(this.type='date')" required>
+                <input type="text" placeholder="Return:" name="returnDate"
+        onfocus="(this.type='date')">
+                <input type="number" id="adults" name="adults" placeholder="Adults (Aged 16+)" required oninput="validateInput(this)">
+                <input type="number" id="children" name="children" placeholder="Children (Aged 0-15)" oninput="validateInput(this)">
+                <input type="text" id="travelClass" name="travelClass" placeholder="Travel Class (in Capital)">
+                <input type="number" id="maxPrice" name="maxPrice" placeholder="Max Price (in €)" oninput="validateInput(this)">
+                <button type="submit" id="search">Search</button>
+            </form>
+        </div>
+    </div>
+    <div id="switch">
+        <button id="flightButton2">Flight</button>
+        <button id="hotelButton2">Hotel</button>
+        <button id="carButton2">Blogs</button>
+    </div>
+    <div class="promo">
+        <h1 id="promotext">Plan Your Next Journey at Cheapest Price with Sky Travels</h1>
+    </div>
+    <script src="/flightInput.js"></script>
+</body>
+<%-include("footer.ejs")%>
+</html>
