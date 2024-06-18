@@ -1,2 +1,8 @@
 # CODSOFT
-this is repository to store all work of codsoft this workspace has the files for both task 1 and task 2 of level 2 of the given tasks for task 1 the file is present also in it within the tribute folder 
+this repositiory stores all the files and folders of the second task of level 2 of codsoft which was to make a travel booking website
+
+
+
+
+https://github.com/debshankar037/CODSOFT_task2/assets/101032014/278113f4-70b4-46c3-8d53-35a358e17c6d
+
